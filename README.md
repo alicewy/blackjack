@@ -14,7 +14,7 @@ The core game logic is encapsulated into `src/core/`.
 ## Notes
 - There may be multiple copies of the same card, because multiple decks are used.
 
-Video Demo
+Brief Video Demo
 
 
 https://user-images.githubusercontent.com/21352000/171295053-e4ba6d01-902c-4aef-a45b-7ca1c7f3dea5.mp4
