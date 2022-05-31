@@ -1,3 +1,59 @@
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
+
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -16,6 +72,8 @@ code {
 
 .playerHands {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .playerHand {
@@ -26,6 +84,8 @@ code {
   border-style: solid;
   border-width: 2px;
   border-color: transparent;
+  max-width: 25rem;
+  min-width: 20rem;
 }
 
 .playerHand.active {
@@ -67,6 +127,7 @@ code {
   height: 4em;
   background-color: white;
   text-align:left;
+  font-size: 0.9em;
 
   border-style: solid;
   border-width: 1px;
@@ -76,6 +137,66 @@ code {
 button {
   display: inline-block;
   width: 10rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin: 1rem;
+  padding: 0.25rem 0.5rem;
+  background-color: whitesmoke;
+  border-width: 1px;
+  border-radius: 0.1em;
+}
+
+
+.red {
+  color: red;
+}
+
+h4 {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+button {
+  background-color: rgba(51, 51, 51, 0.05);
+  border-radius: 8px;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background-color: whitesmoke;
+  margin: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .playerHand, .playerHand.dealer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0.1em;
+    padding-bottom: 0.1em;
+  }
+
+  h4 {
+    font-size: 0.8em;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  .playerCard {
+    font-size: 1.0rem;
+
+  }
 }
