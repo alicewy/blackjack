@@ -1,22 +1,29 @@
+// file is for representing the game state and functions that query the game state without changing it
+
+// initialize new game state
 function initState(numPlayers) {
   let state = {
+    // array of cards. see addDeck() in actions.js
     deck: [],
-    hands: [[]],
+    hands: [[]], //player 0 is the dealer
     playerTurn: 1,
     events: [],
   }
 
+  //add a hand for each player
   for (let i = 0; i < numPlayers; ++i) {
-    state.hands.push([])
+    state.hands.push([]);
   }
-
+  
   return state;
 }
 
-function handValue(state, player) {
+// return the score of player's hand
+function handValue(state, player) { 
   let value = 0;
   let numAces = 0;
 
+  // count cards with aces as 11s
   for (let c of state.hands[player]) {
     if (typeof c.face === 'number') {
       value += c.face;
@@ -31,6 +38,7 @@ function handValue(state, player) {
     }
   }
 
+  // switch aces to 1 until <= 21
   while (value > 21 && numAces > 0) {
     value -= 10;
     --numAces;
@@ -45,6 +53,7 @@ function didPlayerBust(state, player) {
   return false;
 }
 
+//does the player's hand have a blackjack?
 function playerBlackJack(state, player)
 {
   return handValue(state, player) === 21 && state.hands[player].length === 2;
@@ -54,24 +63,10 @@ function numPlayers(state) {
   return state.hands.length - 1;
 }
 
-function card(s) {
-  const suit = s[s.length - 1];
-  let f = s.substring(0, s.length - 1);
-  if (["J", "Q", "K", "A"].indexOf(f) === -1) {
-    f = parseInt(f);
-  }
-
-  return ({
-    face: f,
-    suit,
-  });
-}
-
 module.exports = {
   initState,
   numPlayers,
   handValue,
   didPlayerBust,
-  playerBlackJack,
-  card
+  playerBlackJack
 }

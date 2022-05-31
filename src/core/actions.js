@@ -1,5 +1,6 @@
 const { numPlayers, didPlayerBust, playerBlackJack, handValue } = require('./state.js')
 
+//adds a 52 card deck
 function addDeck(state) {
   for (let s of ["H", "S", "C", "D"]) {
     for (let i = 2; i <= 10; ++i) {
@@ -19,6 +20,8 @@ function shuffleDeck(state) {
   }
 }
 
+//removes a card from the deck, puts it in the player's hand 
+//visible - whether it's face up or face down
 function dealTo(state, player, visible) {
   if (state.deck.length < 52) {
     addDeck(state);
@@ -36,6 +39,7 @@ function emptyHands(state) {
   }
 }
 
+// call anytime one player's turn ends
 function nextTurn(state) {
   state.events.push({ event: "END_TURN", player: state.playerTurn })
 
@@ -88,6 +92,7 @@ function stand(state) {
   nextTurn(state);
 }
 
+// perform dealer's move
 function dealerMove(state) {
   // Skip if all players are done
   let allBust = true;
@@ -109,6 +114,7 @@ function dealerMove(state) {
   }
 }
 
+//deals the cards at the beginning of the round
 function deal(state) {
   emptyHands(state);
 
