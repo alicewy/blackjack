@@ -10,6 +10,7 @@
 ## Design
 The core game logic is encapsulated into `src/core/`. 
 `state.js` represents the state of the game at a point in time and `actions.js` contain the rules for changing the state.
+The code is written using node.js and the web frontend is written using ReactJS
 
 ## Notes
 - There may be multiple copies of the same card, because multiple decks are used.
