@@ -13,25 +13,6 @@ function initState(numPlayers) {
   return state;
 }
 
-function addDeck(state) {
-  for (let s of ["H", "S", "C", "D"]) {
-    for (let i = 2; i <= 10; ++i) {
-      state.deck.push({ face: i, suit: s });
-    }
-    state.deck.push({ face: "J", suit: s });
-    state.deck.push({ face: "Q", suit: s });
-    state.deck.push({ face: "K", suit: s });
-    state.deck.push({ face: "A", suit: s });
-  }
-}
-
-function shuffleDeck(state) {
-  for (let i = state.deck.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [state.deck[i], state.deck[j]] = [state.deck[j], state.deck[i]];
-  }
-}
-
 function handValue(state, player) {
   let value = 0;
   let numAces = 0;
@@ -88,8 +69,6 @@ function card(s) {
 
 module.exports = {
   initState,
-  addDeck,
-  shuffleDeck,
   numPlayers,
   handValue,
   didPlayerBust,

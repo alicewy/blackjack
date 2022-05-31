@@ -1,90 +1,13 @@
 import './App.css';
 
-import { initState, handValue, didPlayerBust, playerBlackJack, numPlayers } from './core/state.js';
 import React from 'react';
+
+import { initState, handValue, didPlayerBust, playerBlackJack, numPlayers } from './core/state.js';
 import { deal, dealerMove, hit, stand } from './core/actions';
 
-class Card extends React.Component {
-  render() {
-    if (this.props.visible) {
-      const suit = {"S": "♠",	"H": "♥",	"D": "♦",	"C": "♣"}[this.props.suit];
-      let className = "playerCard"; 
-      if(this.props.suit === "H" || this.props.suit === "D") {
-        className += " red";
-      }
-
-      return (<li className={className}>{this.props.face + suit}</li>);
-    } else {
-      return (<li className="playerCard">??</li>);   
-    }
-  }
-}
-
-function playerName(i) {
-  if (i === 0) {
-    return "Dealer";
-  }
-  return "Player " + i;
-}
-
-class PlayerHand extends React.Component {
-  render() {
-    let className = "playerHand";
-    if (this.props.player === 0) {
-      className += " dealer";
-    }
-
-    if (this.props.turn) {
-      className += " active";
-    }
-
-    if (this.props.win) {
-      className += " win";
-    }
-
-    if (this.props.lose) {
-      className += " lose";
-    }
-
-    return (<div className={className}>
-      <h4>{playerName(this.props.player)} ({this.props.value})</h4>
-      <ol style={{padding: 0}}>{this.props.hand.map((c, i) => <Card face={c.face} suit={c.suit} visible={c.visible} key={c.face + c.suit + i + c.visible} />)}</ol>
-    </div>)
-  }
-};
-
-class PlayerControls extends React.Component {
-  playerNumButtons() {
-     return (
-      <div>
-        <button onClick={this.props.addPlayer}>add player</button>
-        <button onClick={this.props.removePlayer}>remove player</button>
-      </div>
-     );
-  }
-
-  render() {
-    let enabled = this.props.playerTurn !== 0;
-    
-    if (this.props.events.some(e => e.event === "NEW_GAME")) {
-      return (<div>
-        <h4>Round Over</h4>
-        <button onClick={this.props.newGame}>new game</button>
-        { this.playerNumButtons() }
-      </div>)
-    } else {
-      return (<div>
-      <div>
-        <h4>{playerName(this.props.playerTurn)}'s Turn</h4>
-        <button disabled={!enabled} onClick={this.props.hit}>hit</button>
-        <button disabled={!enabled} onClick={this.props.stand}>stand</button>
-      </div>
-      { this.playerNumButtons() }
-      </div>
-      );
-    }
-  }
-}
+import PlayerHand from './components/PlayerHand';
+import EventList from './components/EventList';
+import PlayerButtons from './components/PlayerButtons';
 
 function deepCopy(o) {
   return JSON.parse(JSON.stringify(o));
@@ -170,26 +93,26 @@ class App extends React.Component {
             turn={this.state.gameState.playerTurn === i}
             player={i}
             hand={h}
-            key={i} />);
+            key={i} />); 
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          { this.renderPlayerHand(0) }
-          <div className="playerHands">
-            { this.state.gameState.hands.map((h, i) => i !== 0 ? this.renderPlayerHand(i) : null) }
-          </div>
-          <PlayerControls
-            playerTurn={this.state.gameState.playerTurn}
-            addPlayer={() => this.addPlayer()}
-            removePlayer={() => this.removePlayer()}
-            hit={() => this.hit()}
-            stand={() => this.stand()}
-            events={this.state.gameState.events}
-            newGame={() => this.newGame()} />
-        </header>
+        { this.renderPlayerHand(0) }
+        <div className="playerHands">
+          { this.state.gameState.hands.map((h, i) => i !== 0 ? this.renderPlayerHand(i) : null) }
+        </div>
+        <PlayerButtons
+          playerTurn={this.state.gameState.playerTurn}
+          addPlayer={() => this.addPlayer()}    
+          removePlayer={() => this.removePlayer()}
+          hit={() => this.hit()}
+          stand={() => this.stand()}
+          events={this.state.gameState.events}
+          newGame={() => this.newGame()} />
+        <EventList
+          events={this.state.gameState.events} />
       </div>
     );
   }

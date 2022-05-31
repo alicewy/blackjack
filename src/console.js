@@ -1,6 +1,6 @@
 const prompt = require('prompt-sync')();
 
-const { initState, addDeck, shuffleDeck, numPlayers, didPlayerBust, handValue } = require("./core/state.js")
+const { initState, numPlayers, didPlayerBust, handValue } = require("./core/state.js")
 const { hit, stand, dealerMove, deal } = require("./core/actions.js")
 
 function printHands(state) {
@@ -76,7 +76,7 @@ function gameLoop(state) {
 
   for (const e of state.events) {
     if (e.event === "NEW_GAME") {
-      const i = prompt("new game? y/n")
+      const i = prompt("new game? (y/n): ")
 
       state.events = [];
       deal(state);
@@ -85,7 +85,7 @@ function gameLoop(state) {
     }
   }
 
-  if (state.playerTurn == 0) {
+  if (state.playerTurn === 0) {
     dealerMove(state);
 
   } else {
@@ -103,16 +103,6 @@ function gameLoop(state) {
 
 // Game loop
 let state = initState(2);
-addDeck(state);
-shuffleDeck(state);
-
-state.deck.push({ face: 10, suit: "H" });
-state.deck.push({ face: 1, suit: "H" });
-state.deck.push({ face: 10, suit: "H" });
-state.deck.push({ face: "A", suit: "H" });
-state.deck.push({ face: "A", suit: "H" });
-state.deck.push({ face: "A", suit: "H" });
-
 deal(state);
 
 while (gameLoop(state));

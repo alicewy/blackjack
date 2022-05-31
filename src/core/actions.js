@@ -1,4 +1,23 @@
-const { numPlayers, didPlayerBust, playerBlackJack, handValue, addDeck, shuffleDeck } = require('./state.js')
+const { numPlayers, didPlayerBust, playerBlackJack, handValue } = require('./state.js')
+
+function addDeck(state) {
+  for (let s of ["H", "S", "C", "D"]) {
+    for (let i = 2; i <= 10; ++i) {
+      state.deck.push({ face: i, suit: s });
+    }
+    state.deck.push({ face: "J", suit: s });
+    state.deck.push({ face: "Q", suit: s });
+    state.deck.push({ face: "K", suit: s });
+    state.deck.push({ face: "A", suit: s });
+  }
+}
+
+function shuffleDeck(state) {
+  for (let i = state.deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [state.deck[i], state.deck[j]] = [state.deck[j], state.deck[i]];
+  }
+}
 
 function dealTo(state, player, visible) {
   if (state.deck.length < 52) {
@@ -70,10 +89,10 @@ function stand(state) {
 }
 
 function dealerMove(state) {
-  // Check if all players have busted
+  // Skip if all players are done
   let allBust = true;
   for (let p = 1; p <= numPlayers(state); ++p) {
-    if (!didPlayerBust(state, p)) {
+    if (!(didPlayerBust(state, p) || playerBlackJack(state, p))) {
       allBust = false;
       break;
     }
@@ -117,4 +136,6 @@ module.exports = {
   hit,
   stand,
   dealerMove,
+  addDeck,
+  shuffleDeck,
 }
